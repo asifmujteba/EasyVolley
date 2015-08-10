@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.asifmujteba.zaloraandroid.UI.activities.ProductsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridView"
+            android:numColumns="auto_fit"
+            android:gravity="center"
+            android:columnWidth="160dp"
+            android:stretchMode="spacingWidth"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView android:id="@+id/emptyElement"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:textColor="#000000"
+        android:textSize="@dimen/font_size_title"
+        android:gravity="center"
+        android:text="@string/no_data_pull" />
+
+
+</RelativeLayout>

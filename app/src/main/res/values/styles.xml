@@ -1,0 +1,32 @@
+<resources>
+
+    <style name="AppTheme" parent="AppTheme.Base"></style>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <!--<item name="colorPrimaryLight">@color/primary_light</item>-->
+        <item name="android:textColorPrimary">@color/icons</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:editTextColor">@color/primary_text</item>
+        <item name="editTextColor">@color/primary_text</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppTheme.OverlayActionBar">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="ButtonAppTheme" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:textColor">@color/icons</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+</resources>
