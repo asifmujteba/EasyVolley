@@ -56,23 +56,67 @@ This will ensure that requests are cancelled and callbacks are not called after 
 
 
 **Performing Image Requests**
+- Ability to set callbacks on image load or directly load it into an ImageView
+- Ability to set image width, height and different scale types.
 
 ````java
 EasyVolley.withGlobalQueue()
                 .load(url)
                 .asBitmap()
-                .into(IMAGE_VIEW_HERE)
+                .setMaxWidth(WIDTH_HERE) // OPTIONAL
+                .setMaxHeight(HEIGHT_HERE) // OPTIONAL
+                .setScaleType(SCALE_TYPE_HERE) // OPTIONAL
+                .setCallback(...) // OPTIONAL
+                .into(IMAGE_VIEW_HERE) // OPTIONAL
                 .start();
 ````
 
 **Managing Request Queues**
 
-By default Easy Volley creates a global Request Queue to process all requests. We can also create a new request queue if needed.
+By default EasyVolley creates a global Request Queue to process all requests. We can also create new request queues if needed.
 
 ````java
 EasyVolley.withNewQueue(getApplicationContext())
 ````
 
+**Setting Headers**
+
+````java
+EasyVolley.withGlobalQueue()
+                .load(URL_COMES_HERE)
+                .addHeader(KEY1_HERE, VALUE1_HERE)
+                .addHeader(KEY2_HERE, VALUE2_HERE)
+                ...
+````
+
+**Adding Get/Post Parameters**
+
+````java
+EasyVolley.withGlobalQueue()
+                .load(URL_COMES_HERE)
+                .addParam(KEY1_HERE, VALUE1_HERE)
+                .addParam(KEY2_HERE, VALUE2_HERE)
+                ...
+````
+**Request Caching**
+- Cache uses least recently used technique to limit memory size.
+- By defaut all requests are cached in memory and disk as well. (caching http requests directly in memory in addition to images really fastens the User experience especially for fast scrolling scenarios)
+- Http headers, Get parameters, Post body digest are all taken into consideration for effiecient caching
+
+<h2>Coming Soon / TODO</h2>
+- Schedule Callbacks on Main Thread always.
+- Respecting Http Cache-Control and Expiry Headers for memory Cache as well.
+- Auto scale images to fit ImageViews by inspecting ImageView attributes
+- Treat same image requests with different scale sizes differently.
+- Ability to Add http headers and parameters to all requests globally and for a specfic Request Queue.
+- Ability to set Image loading configurations globally
+- Loading and caching images from Content Providers and Local disk
+- Multipart Http Requests
+- Write Wrappers for upload/Download tasks
+- Batch Requests
+- By default set low priority for Image Requests
+- Prioritize certain requests
+ 
 
 
 
