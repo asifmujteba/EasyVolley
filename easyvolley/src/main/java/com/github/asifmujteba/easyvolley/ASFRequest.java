@@ -17,7 +17,14 @@ public abstract class ASFRequest<T> {
     public static final int DEFAULT_NETWORK_TIMEOUT_TIME = 1000 * 20;
 
     public enum METHOD {
-        GET(Request.Method.GET), POST(Request.Method.POST);
+        GET(Request.Method.GET),
+        POST(Request.Method.POST),
+        PUT(Request.Method.PUT),
+        DELETE(Request.Method.DELETE),
+        HEAD(Request.Method.HEAD),
+        OPTIONS(Request.Method.OPTIONS),
+        TRACE(Request.Method.TRACE),
+        PATCH(Request.Method.PATCH);
         private int value;
         METHOD(int value) {
             this.value = value;
@@ -31,6 +38,7 @@ public abstract class ASFRequest<T> {
     private ASFRequestListener<T> mCallback;
     private METHOD mMethod;
     private String mUrl;
+    private String mCacheKey;
     private WeakReference<ASFCache> mCache;
     private boolean mShouldUseCache = true;
     private int mNetworkTimeoutTime = DEFAULT_NETWORK_TIMEOUT_TIME;
@@ -44,8 +52,8 @@ public abstract class ASFRequest<T> {
 
     public void start() {
         if (mRequestQueueWeakReference.get() != null && getRequest() != null) {
-            if (shouldUseCache() && getCache() != null) {
-                ASFCache.ASFEntry entry = getCache().get(getUrl());
+            if (shouldUseCache() && isCachableHTTPMethod() && getCache() != null) {
+                ASFCache.ASFEntry entry = getCache().get(getCacheKey());
                 if (entry != null) {
                     try {
                         getResponseListener().onResponse((T) entry.getData());
@@ -54,7 +62,9 @@ public abstract class ASFRequest<T> {
                 }
             }
 
-            getRequest().setShouldCache(false);// since we need to use our own cache :)
+            if (!shouldUseCache()) {
+                getRequest().setShouldCache(false);
+            }
             getRequest().setRetryPolicy(new DefaultRetryPolicy(
                     mNetworkTimeoutTime,
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -155,7 +165,7 @@ public abstract class ASFRequest<T> {
 
     protected void notifyResponseAndCacheIfNeeded(T response) {
         if (shouldUseCache() && getCache() != null) {
-            getCache().put(getUrl(), createCacheEntry(response));
+            getCache().put(getCacheKey(), createCacheEntry(response));
         }
 
         notifyResponse(response);
@@ -172,5 +182,42 @@ public abstract class ASFRequest<T> {
             setCallback(null);
         }
         EasyVolley.removedRequest(this);
+    }
+
+    private String getCacheKey() {
+        if (mCacheKey == null) {
+            updateCacheKey();
+        }
+
+        return mCacheKey;
+    }
+
+    private void updateCacheKey() {
+        StringBuilder sb = new StringBuilder(mUrl);
+        sb.append(";H(");
+        for (Map.Entry<String, String> entry : mHeaders.entrySet()) {
+            sb.append(entry.getKey());
+            sb.append(":");
+            sb.append(entry.getValue());
+        }
+        sb.append(")");
+        sb.append(";P(");
+        for (Map.Entry<String, String> entry : mParams.entrySet()) {
+            sb.append(entry.getKey());
+            sb.append(":");
+            sb.append(entry.getValue());
+        }
+        sb.append(")");
+
+        mCacheKey = sb.toString();
+
+        if (mCacheKey.length() > 250) {
+            mCacheKey = ASFUtils.MD5(mCacheKey);
+        }
+    }
+
+    private boolean isCachableHTTPMethod() {
+        return mMethod.getValue() == METHOD.GET.getValue()
+                || mMethod.getValue() == METHOD.POST.getValue();
     }
 }

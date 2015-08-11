@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'easy-volley'
+    bintrayName = 'easyvolley'
 
     publishedGroupId = 'com.github.asifmujteba'
     libraryName = 'EasyVolley'
-    artifact = 'easy-volley'
+    artifact = 'easyvolley'
 
     libraryDescription = 'Android Volley Wrapper library to make networking easy, flexible and better'
 
     siteUrl = 'https://github.com/asifmujteba/EasyVolley'
     gitUrl = 'https://github.com/asifmujteba/EasyVolley.git'
 
-    libraryVersion = '0.9.2'
+    libraryVersion = '0.9.3'
 
     developerId = 'asifmujteba'
     developerName = 'Asif Mujteba'
@@ -29,10 +29,10 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion 9
         targetSdkVersion 21
         versionCode 1
-        versionName "0.9.2"
+        versionName "0.9.3"
     }
     buildTypes {
         release {

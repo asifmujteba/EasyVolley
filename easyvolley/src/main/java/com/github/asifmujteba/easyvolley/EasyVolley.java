@@ -16,11 +16,14 @@ import java.util.Iterator;
 public class EasyVolley {
     private static final String TAG = EasyVolley.class.getName().toString();
 
-    private static ASFRequestQueue mGlobalRequestQueue;
-    private static ArrayList<ASFRequestQueue> mRequestQueues = new ArrayList<>();
-    private static ArrayList<Pair<WeakReference<Object>, WeakReference<ASFRequest>>> subscribers
+    private static final int DEFAULT_MAX_DISK_CACHE_SIZE = 100 * 1024 * 1024;
+
+    private static com.github.asifmujteba.easyvolley.ASFRequestQueue mGlobalRequestQueue;
+    private static ArrayList<com.github.asifmujteba.easyvolley.ASFRequestQueue> mRequestQueues = new ArrayList<>();
+    private static ArrayList<Pair<WeakReference<Object>, WeakReference<com.github.asifmujteba.easyvolley.ASFRequest>>> subscribers
             = new ArrayList<>();
-    private static ASFMemoryCache mMemoryCache;
+    private static com.github.asifmujteba.easyvolley.ASFMemoryCache mMemoryCache;
+    private static int maxDiskCacheBytes = DEFAULT_MAX_DISK_CACHE_SIZE;
 
     public static void initialize(Context appContext) {
         initialize(appContext, 0);
@@ -28,8 +31,8 @@ public class EasyVolley {
 
     public static void initialize(Context appContext, int lruCacheSize) {
         if (mGlobalRequestQueue == null) {
-            mGlobalRequestQueue = new ASFRequestQueue(Volley.newRequestQueue(appContext,
-                    new HurlStack()));
+            mGlobalRequestQueue = new com.github.asifmujteba.easyvolley.ASFRequestQueue(Volley.newRequestQueue(appContext,
+                    new HurlStack(), maxDiskCacheBytes));
         }
 
         if (lruCacheSize > 0) {
@@ -43,9 +46,9 @@ public class EasyVolley {
             mGlobalRequestQueue = null;
         }
 
-        for (Iterator<ASFRequestQueue> iterator = mRequestQueues.iterator();
+        for (Iterator<com.github.asifmujteba.easyvolley.ASFRequestQueue> iterator = mRequestQueues.iterator();
              iterator.hasNext();) {
-            ASFRequestQueue requestQueue = iterator.next();
+            com.github.asifmujteba.easyvolley.ASFRequestQueue requestQueue = iterator.next();
             requestQueue.stop();
             iterator.remove();
         }
@@ -56,27 +59,27 @@ public class EasyVolley {
         }
     }
 
-    public static ASFRequestContext withGlobalQueue() {
+    public static com.github.asifmujteba.easyvolley.ASFRequestContext withGlobalQueue() {
         if (mGlobalRequestQueue == null) {
             throw new RuntimeException("You need to call initialize() first");
         }
 
-        return new ASFRequestContext(mGlobalRequestQueue);
+        return new com.github.asifmujteba.easyvolley.ASFRequestContext(mGlobalRequestQueue);
     }
 
-    public static ASFRequestContext withNewQueue(Context context) {
-        return new ASFRequestContext(new ASFRequestQueue(Volley.newRequestQueue(context,
+    public static com.github.asifmujteba.easyvolley.ASFRequestContext withNewQueue(Context context) {
+        return new com.github.asifmujteba.easyvolley.ASFRequestContext(new ASFRequestQueue(Volley.newRequestQueue(context,
                 new HurlStack())));
     }
 
-    protected static ASFCache getMemoryCache() {
+    protected static com.github.asifmujteba.easyvolley.ASFCache getMemoryCache() {
         if (mMemoryCache == null) {
-            mMemoryCache = new ASFMemoryCache();
+            mMemoryCache = new com.github.asifmujteba.easyvolley.ASFMemoryCache();
         }
         return mMemoryCache;
     }
 
-    protected static void addedRequest(ASFRequest request) {
+    protected static void addedRequest(com.github.asifmujteba.easyvolley.ASFRequest request) {
         ASFRequestQueue requestQueue = request.getRequestQueue();
         requestQueue.addToCurrentRequests(request);
         if (requestQueue != mGlobalRequestQueue) {
