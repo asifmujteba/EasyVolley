@@ -8,7 +8,7 @@ In 2013 google introduced Volley: Easy & Fast Networking library for Android. Si
 
 **GRADLE**
 
-````java
+````
 dependencies {
   compile 'com.github.asifmujteba:easyvolley:0.9.+'
 }
@@ -18,17 +18,18 @@ A Sample is already included to demonstrate the usage.
 
 - Initialize and do global configurations using `EasyVolley` class once on application start and dispose in the end, preferably by extending Applcation class.
 
-````java
+````
 EasyVolley.initialize(getApplicationContext());
 ````
 
-````java
+````
 EasyVolley.dispose();
 
 ````
 
 **Performing Http Requests**
-````java
+
+````
 EasyVolley.withGlobalQueue()
                 .load(URL_COMES_HERE)
                 .asJsonObject()
@@ -61,7 +62,7 @@ This will ensure that requests are cancelled and callbacks are not called after 
 - Ability to set callbacks on image load or directly load it into an ImageView
 - Ability to set image width, height and different scale types.
 
-````java
+````
 EasyVolley.withGlobalQueue()
                 .load(url)
                 .asBitmap()
@@ -77,13 +78,13 @@ EasyVolley.withGlobalQueue()
 
 By default EasyVolley creates a global Request Queue to process all requests. We can also create new request queues if needed.
 
-````java
+````
 EasyVolley.withNewQueue(getApplicationContext())
 ````
 
 **Setting Headers**
 
-````java
+````
 EasyVolley.withGlobalQueue()
                 .load(URL_COMES_HERE)
                 .addHeader(KEY1_HERE, VALUE1_HERE)
@@ -93,7 +94,7 @@ EasyVolley.withGlobalQueue()
 
 **Adding Get/Post Parameters**
 
-````java
+````
 EasyVolley.withGlobalQueue()
                 .load(URL_COMES_HERE)
                 .addParam(KEY1_HERE, VALUE1_HERE)
