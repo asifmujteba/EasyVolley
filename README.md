@@ -24,6 +24,7 @@ EasyVolley.initialize(getApplicationContext());
 
 ````java
 EasyVolley.dispose();
+
 ````
 
 **Performing Http Requests**
@@ -37,7 +38,7 @@ EasyVolley.withGlobalQueue()
                     public void onSuccess(JsonObject response) {
                         // DO_SOMETHING_HERE
                     }
-
+                    
                     @Override
                     public void onFailure(Exception e) {
                         // SO_SOMETHING_HERE
@@ -45,6 +46,7 @@ EasyVolley.withGlobalQueue()
                 })
                 .start();
 ````
+
 
 **Subscription Mechanism**
 
