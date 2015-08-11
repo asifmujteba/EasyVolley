@@ -1,1 +1,1 @@
-include ':app', ':easyvolley'
+include ':sample', ':easyvolley'
