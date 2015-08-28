@@ -2,18 +2,23 @@ package com.github.asifmujteba.easyvolleysample.UI.activities;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.asifmujteba.easyvolley.ASFRequestListener;
+import com.github.asifmujteba.easyvolley.EasyVolley;
 import com.github.asifmujteba.easyvolleysample.App;
 import com.github.asifmujteba.easyvolleysample.Controllers.ServerController;
 import com.github.asifmujteba.easyvolleysample.Models.Product;
 import com.github.asifmujteba.easyvolleysample.R;
 import com.github.asifmujteba.easyvolleysample.UI.adapters.ProductsAdapter;
 import com.github.asifmujteba.easyvolleysample.UI.base.BaseActivity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 

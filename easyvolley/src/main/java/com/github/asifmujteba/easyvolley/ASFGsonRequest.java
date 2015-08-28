@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ public abstract class ASFGsonRequest<T> extends Request<T> {
     public ASFGsonRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
                           Map<String, String> params,
                           Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(method, url, errorListener);
+        super(method, (method==Method.GET)?appendParamsToURL(url, params):url, errorListener);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         this.gson = gsonBuilder.create();
@@ -36,6 +37,28 @@ public abstract class ASFGsonRequest<T> extends Request<T> {
         this.headers = headers;
         this.params = params;
         this.listener = listener;
+
+
+    }
+
+    private static String appendParamsToURL(String url, Map<String, String> params) {
+        if (!url.contains("?")) {
+            url += "?";
+        }
+
+        for (Map.Entry<String, String> entry : params.entrySet())  {
+            if (!url.endsWith("?") || !url.endsWith("&")) {
+                url += "&";
+            }
+
+            try {
+                url += entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                url += entry.getKey() + "=" + URLEncoder.encode(entry.getValue());
+            }
+        }
+
+        return url;
     }
 
     @Override
