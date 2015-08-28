@@ -15,12 +15,14 @@ public class ASFRequestBuilder {
         this.mRequestContext = requestContext;
     }
 
-    public void addHeader(String key, String value) {
+    public ASFRequestBuilder addHeader(String key, String value) {
         mHeaders.put(key, value);
+        return this;
     }
 
-    public void addParam(String key, String value) {
+    public ASFRequestBuilder addParam(String key, String value) {
         mParams.put(key, value);
+        return this;
     }
 
     public ASFBitmapRequest asBitmap() {

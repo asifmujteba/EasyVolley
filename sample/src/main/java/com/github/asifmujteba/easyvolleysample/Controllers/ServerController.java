@@ -48,6 +48,7 @@ public class ServerController {
                                      final OnServerResponseListener<ArrayList<Product>> listener) {
         EasyVolley.withGlobalQueue()
                 .load(URLWomenClothing)
+                .addParam("p1", "something")
                 .asJsonObject()
                 .setSubscriber(subscriber)
                 .setCallback(new ASFRequestListener<JsonObject>() {
