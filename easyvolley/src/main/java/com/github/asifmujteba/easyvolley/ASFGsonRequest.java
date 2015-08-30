@@ -47,7 +47,7 @@ public abstract class ASFGsonRequest<T> extends Request<T> {
         }
 
         for (Map.Entry<String, String> entry : params.entrySet())  {
-            if (!url.endsWith("?") || !url.endsWith("&")) {
+             if (!url.endsWith("?")) {
                 url += "&";
             }
 
