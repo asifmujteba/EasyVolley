@@ -47,9 +47,10 @@ public abstract class ASFGsonRequest<T> extends Request<T> {
         }
 
         for (Map.Entry<String, String> entry : params.entrySet())  {
-            if (!url.endsWith("?") || !url.endsWith("&")) {
+            if (!(url.endsWith("?") || url.endsWith("&"))) {
                 url += "&";
             }
+
 
             try {
                 url += entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");

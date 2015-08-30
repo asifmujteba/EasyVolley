@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/asifmujteba/EasyVolley'
     gitUrl = 'https://github.com/asifmujteba/EasyVolley.git'
 
-    libraryVersion = '0.9.6'
+    libraryVersion = '0.9.7'
 
     developerId = 'asifmujteba'
     developerName = 'Asif Mujteba'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 3
-        versionName "0.9.6"
+        versionName "0.9.7"
     }
     buildTypes {
         release {

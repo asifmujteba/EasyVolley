@@ -40,6 +40,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'org.parceler:parceler:1.0.3'
     compile 'org.parceler:parceler-api:1.0.3'
-    //compile project(':easyvolley')
-    compile 'com.github.asifmujteba:easyvolley:0.9.+'
+    compile project(':easyvolley')
+    //compile 'com.github.asifmujteba:easyvolley:0.9.+'
 }
